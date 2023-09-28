@@ -1,49 +1,19 @@
 <template>
-  <div class="allCard">
-    <cardShow v-for="pokemon in pokemons" :key="pokemon.id" @click="pokemonEvolution(pokemon.id)">
-      <template v-slot:title>
-        {{ pokemon.name }} # {{ pokemon.id }}
-      </template>
-      <template v-slot:content>
-        <img :src="pokemon.img" />
-      </template>
-      <template v-slot:footer>
-        <div v-for="feature in pokemon.types" :key="feature.slot">
-          {{ feature.type.name }}
-        </div>
-      </template>
-    </cardShow>
-  </div>
-  <div class="allCard">
-    <cardShow v-for="pokemon in evolution" :key="pokemon.id">
-      <template v-slot:title>
-        {{ pokemon.name }} # {{ pokemon.id }}
-      </template>
-      <template v-slot:content>
-        <img :src="pokemon.img" />
-      </template>
-      <template v-slot:footer>
-        <div v-for="feature in pokemon.types" :key="feature.slot">
-          {{ feature.type.name }}
-        </div>
-      </template>
-    </cardShow>
-  </div>
+  <pokemonCards :pokemons="pokemons" @buttonClicked="pokemonEvolution" />
+  <pokemonCards :pokemons="evolution" />
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import cardShow from './components/cardShow.vue'
+import pokemonCards from './components/pokemonCards.vue'
 const pokemonAPI = ref(process.env.VUE_APP_POKEMON_API_URL);
 
 
 let pokemons = ref('');
 let evolution = ref('');
-
 onMounted(() => {
   togetData();
 })
-
 const togetData = async () => {
   try {
     let promises = [dataPokemon(1), dataPokemon(4), dataPokemon(7)];
@@ -60,7 +30,7 @@ const togetData = async () => {
 }
 
 const pokemonEvolution = (id) => {
-  const evolutions = [dataPokemon(id + 1), dataPokemon(id + 2)];
+  let evolutions = [dataPokemon(id + 1), dataPokemon(id + 2)];
 
   Promise.all(evolutions)
     .then((returned) => {
@@ -75,6 +45,7 @@ const pokemonEvolution = (id) => {
       console.error(error);
     });
 }
+
 
 const dataPokemon = async (key) => {
   try {
@@ -93,15 +64,4 @@ const dataPokemon = async (key) => {
 }
 </script>
 
-<style scoped>
-.allCard {
-  display: flex;
-  justify-content: space-evenly;
-
-}
-
-img {
-  height: 150px;
-  width: 150px;
-}
-</style>
+<style scoped></style>

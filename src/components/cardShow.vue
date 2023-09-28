@@ -6,8 +6,7 @@
             </div>
             <hr />
             <div class="pokemonImage">
-                <slot name="content">
-                </slot>
+                <slot name="content"></slot>
             </div>
             <hr />
             <div class="pokemonProperty">
@@ -20,9 +19,14 @@
 <script setup>
 
 </script>
+
 <style scoped>
 .cardContainer {
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
+    justify-content: center;
+
     margin-top: 5rem;
     cursor: pointer;
 }
@@ -35,16 +39,16 @@
     height: 28rem;
 }
 
+img {
+    height: 50px;
+    width: 50px;
+}
+
 .pokemonName {
     padding: 2rem;
     text-align: center;
     font-size: 30px;
     font-weight: 600;
-}
-
-img {
-    height: 50px;
-    width: 50px;
 }
 
 .pokemonImage {
