@@ -1,6 +1,6 @@
 <template>
   <div class="allCard">
-    <div class="cardContainer"  v-for="pokemon in pokemons" :key="pokemon.id">
+    <div class="cardContainer" v-for="pokemon in pokemons" :key="pokemon.id">
       <div class="pokemonCard">
         <div class="pokemonName">
           {{ pokemon.name }} # {{ pokemon.id }}
@@ -64,7 +64,7 @@ const dataPokemon = async (key) => {
 .allCard {
   display: flex;
   justify-content: space-evenly;
-  
+
 }
 
 .cardContainer {
