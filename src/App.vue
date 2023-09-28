@@ -1,27 +1,24 @@
 <template>
   <div class="allCard">
-    <div class="cardContainer" v-for="pokemon in pokemons" :key="pokemon.id">
-      <div class="pokemonCard">
-        <div class="pokemonName">
-          {{ pokemon.name }} # {{ pokemon.id }}
+    <cardShow v-for="pokemon in pokemons" :key="pokemon.id" @click="handleCardClick(pokemon.id)">
+      <template v-slot:title>
+        {{ pokemon.name }} # {{ pokemon.id }}
+      </template>
+      <template v-slot:content>
+        <img :src="pokemon.img" />
+      </template>
+      <template v-slot:footer>
+        <div v-for="feature in pokemon.types" :key="feature.slot">
+          {{ feature.type.name }}
         </div>
-        <hr />
-        <div class="pokemonImage">
-          <img :src="pokemon.img" />
-        </div>
-        <hr />
-        <div class="pokemonProperty">
-          <div v-for="feature in pokemon.types" :key="feature.slot">
-            {{ feature.type.name }}
-          </div>
-        </div>
-      </div>
-    </div>
+      </template>
+    </cardShow>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
+import cardShow from './components/cardShow.vue'
 const pokemonAPI = ref(process.env.VUE_APP_POKEMON_API_URL);
 
 let pokemons = ref('');
@@ -67,41 +64,8 @@ const dataPokemon = async (key) => {
 
 }
 
-.cardContainer {
-  gap: 2rem;
-  margin-top: 5rem;
-  cursor: pointer;
-}
-
-.pokemonCard {
-  border: 1px solid rgb(202, 197, 197);
-  box-shadow: 2px 2px 2px 2px lightgray;
-  border-radius: .7em;
-  width: 20rem;
-  height: 28rem;
-}
-
-.pokemonName {
-  padding: 2rem;
-  text-align: center;
-  font-size: 30px;
-  font-weight: 600;
-}
-
-.pokemonImage {
-  padding: 2rem;
-  text-align: center;
-}
-
-
 img {
   height: 150px;
   width: 150px;
-}
-
-.pokemonProperty {
-  padding: 1rem;
-  text-align: center;
-  font-size: 25px;
 }
 </style>
