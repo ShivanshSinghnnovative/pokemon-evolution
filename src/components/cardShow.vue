@@ -6,7 +6,8 @@
             </div>
             <hr />
             <div class="pokemonImage">
-                <slot name="content"></slot>
+                <slot name="content">
+                </slot>
             </div>
             <hr />
             <div class="pokemonProperty">
@@ -17,6 +18,7 @@
 </template>
 
 <script setup>
+
 </script>
 <style scoped>
 .cardContainer {
@@ -38,6 +40,11 @@
     text-align: center;
     font-size: 30px;
     font-weight: 600;
+}
+
+img {
+    height: 50px;
+    width: 50px;
 }
 
 .pokemonImage {
