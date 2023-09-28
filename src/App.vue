@@ -28,28 +28,34 @@ let pokemons = ref('');
 onMounted(() => {
   togetData();
 })
-const togetData = () => {
-  let promises = [dataPokemon(1), dataPokemon(4), dataPokemon(7)];
-  Promise.all(promises).then((returns) => {
+const togetData = async () => {
+  try {
+    let promises = [dataPokemon(1), dataPokemon(4), dataPokemon(7)];
+    const returns = await Promise.all(promises);
     pokemons.value = returns.map((data) => ({
       id: data.id,
       name: data.name,
       img: data.img,
       types: data.types,
     }));
-  })
-    .catch(err => console.error(err));
-
+  } catch (err) {
+    console.error(err);
+  }
 }
 
-async function dataPokemon(key) {
-  let response = await fetch(`${pokemonAPI.value}${key}`);
-  let json = await response.json();
-  return {
-    id: json.id,
-    name: json.name,
-    img: json.sprites.other["official-artwork"].front_default,
-    types: json.types
+const dataPokemon = async (key) => {
+  try {
+    const response = await fetch(`${pokemonAPI.value}${key}`);
+    const json = await response.json();
+    return {
+      id: json.id,
+      name: json.name,
+      img: json.sprites.other["official-artwork"].front_default,
+      types: json.types
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 }
 </script>
